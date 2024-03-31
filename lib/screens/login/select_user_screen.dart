@@ -19,7 +19,7 @@ class THSelectUser extends StatelessWidget{
                 child: THTextButton(
                   onTap: () => context.push('/login'), 
                   backgroundColor: THColors.redColor,
-                  child: const Text("Prijavi se", style: TextStyle(color: THColors.darkColor, fontWeight: FontWeight.w700),
+                  child: const Text("Prijavi se", style: TextStyle(color: THColors.darkColor, fontWeight: FontWeight.bold),
                   )),
               ),
                Padding(
@@ -30,7 +30,7 @@ class THSelectUser extends StatelessWidget{
                      onTap: () => context.push('/register'), 
                      backgroundColor: const Color.fromARGB(0, 0, 0, 0),
                      borderColor: THColors.whiteColor,
-                     child: const Text("Novi kupac", style: TextStyle(color: THColors.whiteColor, fontWeight: FontWeight.w700))),
+                     child: Text("Novi kupac", style: Theme.of(context).textTheme.bodyMedium)),
                  ),
                )
             ]

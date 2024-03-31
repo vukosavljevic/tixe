@@ -73,11 +73,11 @@ class THLoginScreen extends StatelessWidget {
         const Text("Prijavi se svojom e-mail adresom", style: TextStyle(color: Colors.white)),
         Padding(
               padding: const EdgeInsets.only(top:16.0),
-              child: THTextField(labelText: 'E - mail adresa', textInputController: TextEditingController(),),
+              child: THTextField(labelText: 'E - mail adresa', textInputController: TextEditingController()),
             ),
          Padding(
               padding: const EdgeInsets.only(top:16.0),
-              child: THTextField(labelText: 'Lozinka',textInputController: TextEditingController(),),
+              child: THTextField(labelText: 'Lozinka',textInputController: TextEditingController()),
             ),
           Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
