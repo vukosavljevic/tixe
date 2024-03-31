@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tixehr/screens/home/home.dart';
 import 'package:tixehr/screens/login/login_screen.dart';
 import 'package:tixehr/screens/login/select_user_screen.dart';
 import 'package:tixehr/screens/register/register_screen.dart';
@@ -31,6 +32,9 @@ final GoRouter router = GoRouter(
             return const THRegisterScreen();
           },
         ),
+        GoRoute(path: 'home', builder: (BuildContextcontext, GoRouterState state) {
+            return const THHomeScreen();
+        })
       ],
     ),
   ],

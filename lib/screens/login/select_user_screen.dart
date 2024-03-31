@@ -15,24 +15,23 @@ class THSelectUser extends StatelessWidget{
             children: [
               Expanded(child: Image.asset(THImages.mainImage, width: MediaQuery.of(context).size.width)),
               ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 550),
+                constraints: const BoxConstraints(maxWidth: 550),
                 child: THTextButton(
                   onTap: () => context.push('/login'), 
-                  backgroundColor: THColors.redColor,
+                  backgroundColor: THColors.whiteColor,
                   child: const Text("Prijavi se", style: TextStyle(color: THColors.darkColor, fontWeight: FontWeight.bold),
                   )),
               ),
                Padding(
                  padding: const EdgeInsets.symmetric(vertical:20),
                  child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 550),
+                    constraints: const BoxConstraints(maxWidth: 550),
                    child: THTextButton(
                      onTap: () => context.push('/register'), 
-                     backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-                     borderColor: THColors.whiteColor,
-                     child: Text("Novi kupac", style: Theme.of(context).textTheme.bodyMedium)),
+                     backgroundColor: THColors.redColor,
+                     child: const Text("Novi kupac", style: TextStyle(color: THColors.whiteColor, fontWeight: FontWeight.bold)),
                  ),
-               )
+               ))
             ]
             ),
       );

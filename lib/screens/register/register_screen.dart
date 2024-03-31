@@ -19,7 +19,7 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
     final surnameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
-    
+  
     bool isCompleted = false;
   @override
   void dispose() {
@@ -131,7 +131,7 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 60.0),
             child: TextButton(
-                onPressed: () => context.go('login'),
+                onPressed: () => context.go('/login'),
                 child: const Text("Već imaš račun?")),
           )
         ],

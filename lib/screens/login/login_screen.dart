@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tixehr/constants/images.dart';
 import 'package:tixehr/screens/widgets/button_widget.dart';
 import 'package:tixehr/screens/widgets/text_field.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../constants/colors.dart';
 
@@ -10,94 +12,62 @@ class THLoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Prijavi se",
+        appBar: AppBar(
+          title: const Text(
+            "Prijavi se",
+          ),
+          backgroundColor: THColors.redColor,
+          centerTitle: true,
         ),
         backgroundColor: THColors.darkColor,
-      ),
-      backgroundColor: THColors.darkColor,
-      body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: THTextButton(
-            onTap: () {},
-            backgroundColor: Colors.blue,
-            child: const Text(
-              "Prijava putem Facebooka",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: THTextButton(
-            onTap: () {},
-            backgroundColor: THColors.whiteColor,
-            child: const Text("Prijava putem Googlea",
-                style: TextStyle(color: THColors.darkColor)),
-          ),
-        ),
-        THTextButton(
-          onTap: () {},
-          backgroundColor: Colors.black,
-          child: const Text("Prijava putem Applea",
-              style: TextStyle(color: Colors.white)),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical:12.0),
-          child: Row(
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: Divider(
-                  color: Colors.white,
-                  height: 25,
-                  thickness: 2,
-                  indent: 5,
-                  endIndent: 5,
+              SizedBox(
+                  height: MediaQuery.of(context).size.height / 4.5,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Image.asset(THImages.mainTextLogo, height: 124)
+                      ])),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: THTextField(
+                  labelText: 'E - mail',
+                  textInputController: TextEditingController(),
                 ),
               ),
-              Text("ILI", style: TextStyle(color: Colors.white)),
-              Expanded(
-                child: Divider(
-                  color: Colors.white,
-                  height: 25,
-                  thickness: 2,
-                  indent: 5,
-                  endIndent: 5,
+              Padding(
+                padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+                child: THTextField(
+                  labelText: 'Lozinka',
+                  textInputController: TextEditingController(),
                 ),
               ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: THTextButton(
+                    onTap: () => context.push("/home"),
+                    backgroundColor: THColors.redColor,
+                    child: const Text("Prijavi se",
+                        style: TextStyle(
+                            color: THColors.whiteColor,
+                            fontWeight: FontWeight.bold)),
+                  )),
+                  TextButton(
+                      onPressed: () {},
+                      child:  Text("Zaboravljena lozinka", style: Theme.of(context).textTheme.bodyMedium)),
+              Padding(
+                padding: const EdgeInsets.only(top: 60.0),
+                child: TextButton(
+                    onPressed: () => context.go('/register'),
+                    child:  Text("Već imaš račun?", style: Theme.of(context).textTheme.bodyMedium)),
+              )
             ],
           ),
-        ),
-        const Text("Prijavi se svojom e-mail adresom", style: TextStyle(color: Colors.white)),
-        Padding(
-              padding: const EdgeInsets.only(top:16.0),
-              child: THTextField(labelText: 'E - mail adresa', textInputController: TextEditingController()),
-            ),
-         Padding(
-              padding: const EdgeInsets.only(top:16.0),
-              child: THTextField(labelText: 'Lozinka',textInputController: TextEditingController()),
-            ),
-          Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: THTextButton(
-            onTap: () {},
-            backgroundColor: THColors.whiteColor,
-            child: const Text("Prijavi se",
-                style: TextStyle(color: THColors.darkColor)),
-          ),
-        ),
-         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2-.0),
-          child: THTextButton(
-            onTap: () {},
-            backgroundColor: Colors.transparent,
-            child: const Text("Zaboravljena lozinka",
-                style: TextStyle(color: THColors.whiteColor)),
-          ),
-        ),
-      ]),
-    );
+        ));
   }
 }
