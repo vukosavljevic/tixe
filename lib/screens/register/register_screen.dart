@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tixehr/constants/colors.dart';
 import 'package:tixehr/constants/images.dart';
+import 'package:tixehr/screens/home/home.dart';
 import 'package:tixehr/screens/widgets/text_field.dart';
+import 'package:go_router/go_router.dart';
+
 
 class THRegisterScreen extends StatefulWidget {
   const THRegisterScreen({super.key});
@@ -12,6 +15,19 @@ class THRegisterScreen extends StatefulWidget {
 
 class _THRegisterScreenState extends State<THRegisterScreen> {
   int currentStepIndex = 0;
+    final nameController = TextEditingController();
+    final surnameController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    
+    bool isCompleted = false;
+  @override
+  void dispose() {
+    nameController.dispose();
+    surnameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +41,7 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
           title: const Text("Novi Kupac"),
           centerTitle: true,
         ),
-        body: Theme(
+        body:isCompleted ? const THHomeScreen(): Theme(
             data: Theme.of(context).copyWith(
               canvasColor: THColors.darkColor,
               colorScheme: const ColorScheme.light(
@@ -42,10 +58,24 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
               onStepContinue: () {
                 final isLastStep = currentStepIndex == getSteps().length - 1;
                 if (isLastStep) {
+                  if(emailController.text.length > 2){
+                    if(passwordController.text.length > 2){
+                      context.push('/login');
+                    }
+                  }
                   // ovdje saljem podatke i spremam ih u bazu
                 } else {
                   setState(() {
-                    currentStepIndex += 1;
+                    if(nameController.text.length > 2)
+                    {
+                      if(surnameController.text.length > 2){
+
+                        currentStepIndex += 1;
+                      }
+                    }
+                    else{
+                      print("npc");
+                    }
                   });
                 }
               },
@@ -118,10 +148,10 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height /4.5,
+                    height: MediaQuery.of(context).size.height /5.5,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Image.asset(THImages.mainTextLogo)])),
+                        children: [Image.asset(THImages.mainTextLogo, height: 80)])),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                   child: Text("Unesite Vaše ime i prezime i nastavite dalje.",
@@ -131,14 +161,14 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
                   padding: const EdgeInsets.only(top: 16.0),
                   child: THTextField(
                     labelText: 'Ime',
-                    textInputController: TextEditingController(),
+                    textInputController: nameController,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: THTextField(
                     labelText: 'Prezime',
-                    textInputController: TextEditingController(),
+                    textInputController: surnameController,
                   ),
                 ),
               ],
@@ -154,27 +184,27 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height / 4.5,
+                    height: MediaQuery.of(context).size.height / 5.5,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Image.asset(THImages.mainTextLogo)])),
+                        children: [Image.asset(THImages.mainTextLogo, height: 80)])),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: Text("Unesite Vaš E-mail i lozinku.",
+                  child: Text("Unesite Vaš e-mail i lozinku.",
                       style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: THTextField(
                     labelText: 'E - mail',
-                    textInputController: TextEditingController(),
+                    textInputController: emailController,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: THTextField(
                     labelText: 'Lozinka',
-                    textInputController: TextEditingController(),
+                    textInputController: passwordController,
                   ),
                 ),
               ],
