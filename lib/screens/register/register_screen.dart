@@ -5,6 +5,7 @@ import 'package:tixehr/screens/home/home.dart';
 import 'package:tixehr/screens/widgets/text_field.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:tixehr/services/firebase_auth_service.dart';
 
 class THRegisterScreen extends StatefulWidget {
   const THRegisterScreen({super.key});
@@ -15,12 +16,14 @@ class THRegisterScreen extends StatefulWidget {
 
 class _THRegisterScreenState extends State<THRegisterScreen> {
   int currentStepIndex = 0;
-    final nameController = TextEditingController();
-    final surnameController = TextEditingController();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-  
-    bool isCompleted = false;
+  final nameController = TextEditingController();
+  final surnameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  final _authService = FirebaseAuthService();
+
+  bool isCompleted = false;
   @override
   void dispose() {
     nameController.dispose();
@@ -41,58 +44,68 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
           title: const Text("Novi Kupac"),
           centerTitle: true,
         ),
-        body:isCompleted ? const THHomeScreen(): Theme(
-            data: Theme.of(context).copyWith(
-              canvasColor: THColors.darkColor,
-              colorScheme: const ColorScheme.light(
-                primary: THColors.redColor,
-              ),
-            ),
-            child: Stepper(
-              type: StepperType.horizontal,
-              steps: getSteps(),
-              currentStep: currentStepIndex,
-              onStepTapped: (step) => setState(() {
-                currentStepIndex = step;
-              }),
-              onStepContinue: () {
-                final isLastStep = currentStepIndex == getSteps().length - 1;
-                if (isLastStep) {
-                  if(emailController.text.length > 2){
-                    if(passwordController.text.length > 2){
-                      context.push('/login');
-                    }
-                  }
-                  // ovdje saljem podatke i spremam ih u bazu
-                } else {
-                  setState(() {
-                    if(nameController.text.length > 2)
-                    {
-                      if(surnameController.text.length > 2){
-
-                        currentStepIndex += 1;
+        body: isCompleted
+            ? const THHomeScreen()
+            : Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: THColors.darkColor,
+                  colorScheme: const ColorScheme.light(
+                    primary: THColors.redColor,
+                  ),
+                ),
+                child: Stepper(
+                  type: StepperType.horizontal,
+                  steps: getSteps(),
+                  currentStep: currentStepIndex,
+                  onStepTapped: (step) => setState(() {
+                    currentStepIndex = step;
+                  }),
+                  onStepContinue: () async {
+                    final isLastStep =
+                        currentStepIndex == getSteps().length - 1;
+                    if (isLastStep) {
+                      if (emailController.text.length > 2 &&
+                          passwordController.text.length > 2) {
+                        try {
+                          await _authService.createUserWithEmailAndPassword(
+                              email: emailController.text,
+                              password: passwordController.text);
+                          setState(() {
+                            isCompleted = true;
+                          });
+                          print("Uspješno :D");
+                        } catch (e) {
+                          print("Greška pri registraciji: $e"); // makniti
+                          // kako handleat?
+                        }
                       }
+                      // ovdje saljem podatke i spremam ih u bazu
+                    } else {
+                      setState(() {
+                        if (nameController.text.length > 2) {
+                          if (surnameController.text.length > 2) {
+                            currentStepIndex += 1;
+                          }
+                        } else {
+                          print("npc");
+                        }
+                      });
                     }
-                    else{
-                      print("npc");
+                  },
+                  onStepCancel: () {
+                    if (currentStepIndex == 0) {
+                    } else {
+                      setState(() {
+                        currentStepIndex -= 1;
+                      });
                     }
-                  });
-                }
-              },
-              onStepCancel: () {
-                if (currentStepIndex == 0) {
-                } else {
-                  setState(() {
-                    currentStepIndex -= 1;
-                  });
-                }
-              },
-              controlsBuilder: (context, ControlsDetails details) {
-                return Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: controlButtons(context, details));
-              },
-            )));
+                  },
+                  controlsBuilder: (context, ControlsDetails details) {
+                    return Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: controlButtons(context, details));
+                  },
+                )));
   }
 
   Widget controlButtons(context, details) {
@@ -148,10 +161,12 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height /5.5,
+                    height: MediaQuery.of(context).size.height / 5.5,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Image.asset(THImages.mainTextLogo, height: 80)])),
+                        children: [
+                          Image.asset(THImages.mainTextLogo, height: 80)
+                        ])),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                   child: Text("Unesite Vaše ime i prezime i nastavite dalje.",
@@ -187,7 +202,9 @@ class _THRegisterScreenState extends State<THRegisterScreen> {
                     height: MediaQuery.of(context).size.height / 5.5,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Image.asset(THImages.mainTextLogo, height: 80)])),
+                        children: [
+                          Image.asset(THImages.mainTextLogo, height: 80)
+                        ])),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                   child: Text("Unesite Vaš e-mail i lozinku.",

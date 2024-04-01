@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030357716896",
+    "project_id": "tixe-backend",
+    "storage_bucket": "tixe-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030357716896:android:bc5138acb94b0d9b2f5ec5",
+        "android_client_info": {
+          "package_name": "com.example.tixehr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAgtsUY7YanxFtKrV9udZ6ihHLlpcV4bg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
